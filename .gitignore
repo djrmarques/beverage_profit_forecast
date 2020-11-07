@@ -1,2 +1,4 @@
 env
 .vscode
+get_data.sh
+*.log
