@@ -2,3 +2,4 @@ env
 .vscode
 get_data.sh
 *.log
+__pycache__
