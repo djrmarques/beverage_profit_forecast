@@ -14,6 +14,7 @@ from plot_functions import plot_cities_forecast, plot_profit_per_city, plot_prof
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+app.title = 'Beverage Sales Dashboard'
 
 # Read the data
 df = pd.read_csv("data/profit_forecast/raw_data.csv", index_col=0)
