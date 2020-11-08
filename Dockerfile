@@ -1,8 +1,11 @@
-FROM python:3.8
+FROM python:3.7
+
 COPY . /app
 
 WORKDIR /app
 
-RUN pip install -r requirements.txt
+RUN apt-get update -y 
+RUN apt-get install build-essential python3-dev -y
+RUN pip3 install -r requirements.txt
 
-CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--ip=0.0.0.0", "--allow-root"]
+CMD python3 app.py
