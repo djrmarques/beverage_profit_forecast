@@ -36,7 +36,7 @@ app.layout = html.Div(children=[
 
     dcc.Graph(id='profit-per-container'),
     dcc.Slider(
-        id='city-slider',
+        id='container-slider',
         min=df.index.year.min(),
         max=df.index.year.max(),
         value=df.index.year.max(),
@@ -46,7 +46,7 @@ app.layout = html.Div(children=[
 
     dcc.Graph(id='profit-per-city'),
     dcc.Slider(
-        id='container-slider',
+        id='city-slider',
         min=df.index.year.min(),
         max=df.index.year.max(),
         value=df.index.year.max(),
