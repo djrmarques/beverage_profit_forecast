@@ -24,6 +24,8 @@ df.index = pd.to_datetime(df.index)
 forecasts = pd.read_csv("data/profit_forecast/forecasts.csv", index_col=0)
 forecasts.index = pd.to_datetime(forecasts.index)
 
+server = app.server
+
 # Create the webapp
 app.layout = html.Div(children=[
     html.H1(children='Beverage Sales Dashboard'),
