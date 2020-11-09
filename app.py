@@ -10,7 +10,7 @@ from dash.dependencies import Input, Output
 import plotly.express as px
 import pandas as pd
 
-from plot_functions import plot_cities_forecast, plot_profit_per_city, plot_profit_per_container
+from plot_functions import plot_cities_forecast, plot_profit_per_city, plot_profit_per_container, plot_profit_per_capita
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
@@ -34,7 +34,7 @@ app.layout = html.Div(children=[
 
     html.P(),
 
-    dcc.Graph(id='profit-per-city'),
+    dcc.Graph(id='profit-per-container'),
     dcc.Slider(
         id='city-slider',
         min=df.index.year.min(),
@@ -44,7 +44,7 @@ app.layout = html.Div(children=[
         step=None
     ),
 
-    dcc.Graph(id='profit-per-container'),
+    dcc.Graph(id='profit-per-city'),
     dcc.Slider(
         id='container-slider',
         min=df.index.year.min(),
@@ -52,6 +52,16 @@ app.layout = html.Div(children=[
         value=df.index.year.max(),
         marks={str(year): str(year) for year in df.index.year},
         step=None
+    ),
+
+    dcc.RadioItems(
+    id="profit_radio",
+    options=[
+        {'label': 'Total Profit', 'value': 'tp'},
+        {'label': 'Profit per Capita', 'value': 'ppc'},
+    ],
+    labelStyle={'display': 'inline-block'},
+    value='ppc',
     ),
 
 
@@ -62,14 +72,18 @@ app.layout = html.Div(children=[
     Output('profit-per-container', 'figure'),
     [Input('container-slider', 'value')])
 def update_cities(selected_year):
-    return plot_profit_per_city(selected_year, df)
+    return plot_profit_per_container(selected_year, df)
 
 @app.callback(
     Output('profit-per-city', 'figure'),
-    [Input('city-slider', 'value')])
-def update_containers(selected_year):
-    return plot_profit_per_container(selected_year, df)
+    [Input('city-slider', 'value'), Input('profit_radio', 'value')])
+def update_containers(selected_year: int, graph_type: str):
+    if graph_type == "tp":
+        return plot_profit_per_city(selected_year, df)
+    else:
+        return plot_profit_per_capita(selected_year, df)
+
 
 
 if __name__ == '__main__':
-    app.run_server(debug=False, host='0.0.0.0', port=8050)
+    app.run_server(debug=True, host='0.0.0.0', port=8050)

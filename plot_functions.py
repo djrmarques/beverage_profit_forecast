@@ -73,7 +73,7 @@ def plot_profit_per_container(year: int, df: pd.DataFrame):
 
 def plot_profit_per_city(year: int, df: pd.DataFrame):
     """ Plots the profit per city on a given year """
-    fig = px.bar(df.loc[df.index.year==year,:].groupby("city", as_index=False)["profit"].sum().sort_values("profit"), 
+    fig = px.bar(df.loc[df.index.year==year,:].groupby("city", as_index=False)["profit"].sum().round().sort_values("profit"), 
                  x="city", 
                  y="profit", 
                  title=f"Total Profit per city on {year}",
@@ -83,3 +83,17 @@ def plot_profit_per_city(year: int, df: pd.DataFrame):
     fig.layout.yaxis.title="Profit (€)"
     fig.layout.xaxis.title="City"
     return fig
+
+def plot_profit_per_capita(year: int, df: pd.DataFrame):
+    """ Plots the profit per ccapita per city on a given year """
+    fig = px.bar(df.loc[df.index.year==year,:].groupby("city", as_index=False)["profit_per_capita"].mean().round(2).sort_values("profit_per_capita"), 
+                 x="city", 
+                 y="profit_per_capita", 
+                 title=f"Profit per capita on {year}",
+                 color_discrete_sequence = [f"rgb{sns.color_palette('deep')[0]}"]
+                )
+    
+    fig.layout.yaxis.title="Profit per capita (€)"
+    fig.layout.xaxis.title="City"
+    return fig
+
