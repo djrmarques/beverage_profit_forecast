@@ -94,7 +94,7 @@ def plot_profit_per_capita(year: int, df: pd.DataFrame):
                  color_discrete_sequence = [f"rgb{sns.color_palette('deep')[0]}"]
                 )
     
-    fig.layout.yaxis.title="Profit per capita (€)"
+    fig.layout.yaxis.title="Profit per capita (€/person)"
     fig.layout.xaxis.title="City"
     return fig
 
