@@ -66,10 +66,11 @@ def plot_profit_per_container(year: int, df: pd.DataFrame):
     df_ = df.drop(["lat", "long", "capacity"], axis=1).dropna().copy()
     color_dict = dict(zip(["glass-500ml", 'plastic-1.5lt', 'can-330ml'], [f"rgb{c}" for c in sns.color_palette("deep")]))
     
-    fig = px.box(df_[df_.index.year == year].dropna().sort_values("container"), x="brand", color="container", color_discrete_map=color_dict, y="profit", title=f"Monthly profit per brand per container on {year}")
-    fig.layout.yaxis.title = "Monthly Profit (€)"
+    fig = px.box(df_[df_.index.year == year].dropna().sort_values(["container", "brand"]), x="brand", color="container", color_discrete_map=color_dict, y="price_ml", title=f"Monthly profit per ml for each brand and container on {year}")
+    fig.layout.yaxis.title = "Monthly Profit per ml sold (€/ml)"
     fig.layout.xaxis.title = "Brand"
     return fig
+
 
 def plot_profit_per_city(year: int, df: pd.DataFrame):
     """ Plots the profit per city on a given year """
